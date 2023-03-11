@@ -270,6 +270,10 @@ const schema = new db.Schema({
     },
     unnamed: {
         type: Number,
+    },
+    rating:{
+        type: Number,
+        default: 0
     }
 
 })

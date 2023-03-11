@@ -360,6 +360,10 @@ const schema = new db.Schema({
     unnamed: {
         type: String,
         default: "-"
+    },
+    rating:{
+        type: String,
+        default: "-"
     }
 
 })

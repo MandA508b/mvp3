@@ -360,6 +360,10 @@ const schema = new db.Schema({
     unnamed: {
         type: Boolean,
         default: false,
+    },
+    rating:{
+        type: Boolean,
+        default: false
     }
 
 })
