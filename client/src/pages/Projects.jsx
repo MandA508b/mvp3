@@ -42,6 +42,7 @@ function Projects() {
         const fetchData = async () => {
             await triggerCoins()
             await triggerGroups()
+            console.log(resultCoins)
         }
 
         if (!!token) {

@@ -764,7 +764,7 @@ main.page {
 .table__grid-result {
     width: 100%;
     display: grid;
-    grid-template: 1fr/repeat(4, 25%);
+    grid-template: 1fr/repeat(2, 50%);
     grid-auto-flow: row;
 }
 .page__result .grid__item {
@@ -1002,11 +1002,17 @@ main.page {
   color: inherit;
   white-space: nowrap;
 }
-@media (any-hover: hover) {
+
+.nav-project__list-item_active{
+  color: #7059e1;
+}
+
+/* TODO changed (commented) */
+/* @media (any-hover: hover) {
   .nav-project__list-item:hover {
     color: #7059e1;
   }
-}
+} */
 
 /*==================================*/
 /*Table section====================*/

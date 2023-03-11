@@ -19,6 +19,7 @@ const Main = () => {
         if (text.length > 1) {
             const res = await searchCoin({text})
             setResultSearch(res.data.coins)
+            console.log(res.data.coins)
         } else {
             setResultSearch([])
         }

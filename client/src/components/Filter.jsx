@@ -127,9 +127,10 @@ const Filter = () => {
     const [allCoins, setAllCoins] = useState([])
     useEffect(() => {
         if (isSuccess) {
-            dispatch(setData({data}))
-            setResultSearch(data.map(elem => elem.name))
-            setAllCoins(data.map(elem => elem.name))
+            const fixedData = data.filter(elem=>!!elem.name)
+            dispatch(setData({data:fixedData}))
+            setResultSearch(fixedData.map(elem => elem.name))
+            setAllCoins(fixedData.map(elem => elem.name))
         }
     }, [data])
     const [anchorEl, setAnchorEl] = React.useState(null);

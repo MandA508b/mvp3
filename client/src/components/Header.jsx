@@ -49,8 +49,10 @@ const Header = () => {
                                 </div>
                             </Link>
                         </div>
-
-                        <Popover
+                        {
+                            !isLogined ? null :
+                            <>
+                            <Popover
                             open={Boolean(anchorEl)}
                             anchorEl={anchorEl}
                             onClose={handleClose}
@@ -96,6 +98,9 @@ const Header = () => {
                                 </Typography>
                             </Link>
                         </div>
+                            </>
+                        }
+                        
 
                         <div className=" header__main">
                             <div className="header__menu menu">

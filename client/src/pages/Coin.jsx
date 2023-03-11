@@ -40,7 +40,10 @@ const Coin = () => {
 
 
     useEffect(() => {
-        if (isSuccess) setCoin(data.filter(coin => coin.name === name.toUpperCase())[0])
+        if (isSuccess) {
+            setCoin(data.filter(coin => coin.name === name.toUpperCase())[0])
+            console.log(data)
+        }
     }, [data])
 
     if (!isSuccess || isLoading || !cls || cll || !cds || cdl || !vss || vsl || !bls || bll || !cts || ctl || !sortedFields.length)
@@ -59,29 +62,11 @@ const Coin = () => {
 
     return (
         <main className="page">
-            {/*<section className="page__main-title main-title container">*/}
-            {/*    <div className="main-title__block">*/}
-            {/*        <h1 className="main-title__title">Hamker</h1><span>i</span>*/}
-            {/*    </div>*/}
-
-            {/*    <div className="main-title__search search">*/}
-            {/*        <input type="text" name="search" className="search__input"/>*/}
-            {/*        <div className="search__placeholder">*/}
-            {/*            <picture>*/}
-            {/*                <source srcSet={require("../assets/img/lupa.webp")} type="image/webp"/>*/}
-            {/*                <img src={require("../assets/img/lupa.png")} alt="search"/>*/}
-            {/*            </picture>*/}
-            {/*            <span>Введіть свою улюблену*/}
-			{/*				криптовалюту</span>*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-
-            {/*</section>*/}
 
             <section className="page__project project container">
                 <div className="project__main">
                     <h2 className="project__title">{coin.full_name}</h2>
-                    <div className="project__rate rate">
+                    {/* <div className="project__rate rate">
                         <picture>
                             <source srcSet={require("../assets/img/star.webp")} type="image/webp"/>
                             <img src={require("../assets/img/star.png")} alt="star"
@@ -89,7 +74,7 @@ const Coin = () => {
                         </picture>
                         <div className="rate__text">Рейтинг проекту:</div>
                         <div className="rate__nums"><span>85</span>/100</div>
-                    </div>
+                    </div> */}
                 </div>
                 <nav className="project__nav nav-project">
                     <ul className="nav-project__list">
