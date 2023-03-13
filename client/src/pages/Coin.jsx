@@ -9,7 +9,24 @@ import {
     useProjectVisibleFilterQuery
 } from "../redux/table/tableApiSlice";
 import CoinInfo from "../components/CoinInfo";
-
+const types = [
+    {
+        name:'Smart Contract Platform',
+        dbName:'SC'
+    },
+    {
+        name:'Defi',
+        dbName:'DeFi'
+    },
+    {
+        name:'Ecosystem',
+        dbName:'(token) ES'
+    },
+    {
+        name:'Metaverse',
+        dbName:'MV'
+    },
+]
 const Coin = () => {
     const navigate = useNavigate()
     const location = useLocation()
@@ -78,10 +95,15 @@ const Coin = () => {
                 </div>
                 <nav className="project__nav nav-project">
                     <ul className="nav-project__list">
-                        <li className="nav-project__list-item"><a href="#">Smart Contract Platform</a></li>
-                        <li className="nav-project__list-item"><a href="#">Defi</a></li>
-                        <li className="nav-project__list-item"><a href="#">Ecosystem</a></li>
-                        <li className="nav-project__list-item"><a href="#">Metaverse</a></li>
+                        {
+                            types.map(elem=>{
+                                console.log(coin.type)
+                                const active = elem.dbName === coin.type
+                                return(
+                                    <li className={`nav-project__list-item ${active ? 'coin_type-active' : null}`}><a href="#">{elem.name}</a></li>
+                                )
+                            })
+                        }
                     </ul>
                 </nav>
             </section>
