@@ -9,6 +9,8 @@ import {
     useProjectVisibleFilterQuery
 } from "../redux/table/tableApiSlice";
 import CoinInfo from "../components/CoinInfo";
+
+
 const types = [
     {
         name:'Smart Contract Platform',
@@ -27,6 +29,7 @@ const types = [
         dbName:'MV'
     },
 ]
+
 const Coin = () => {
     const navigate = useNavigate()
     const location = useLocation()
@@ -83,15 +86,15 @@ const Coin = () => {
             <section className="page__project project container">
                 <div className="project__main">
                     <h2 className="project__title">{coin.full_name}</h2>
-                    {/* <div className="project__rate rate">
+                    <div className="project__rate rate">
                         <picture>
                             <source srcSet={require("../assets/img/star.webp")} type="image/webp"/>
                             <img src={require("../assets/img/star.png")} alt="star"
                                  className="rate__star"/>
                         </picture>
                         <div className="rate__text">Рейтинг проекту:</div>
-                        <div className="rate__nums"><span>85</span>/100</div>
-                    </div> */}
+                        <div className="rate__nums"><span>{coin.rating<=100 ? coin.rating.toFixed() : 100}</span>/100</div>
+                    </div>
                 </div>
                 <nav className="project__nav nav-project">
                     <ul className="nav-project__list">
@@ -148,41 +151,3 @@ const Coin = () => {
 };
 
 export default Coin;
-
-{/* <Stack display={'flex'} flexDirection={'column'} alignItems={'center'}>
-
-            <Typography fontSize={36} fontWeight={700} color={'#56585a'}>
-                {coin.name.toUpperCase()}
-            </Typography>
-            <Stack display={'flex'} gap={4} flexDirection={'row'} margin={'0 auto'} width={'100%'}>
-                <Stack flexWrap={'wrap'} gap={1} width={'100%'} minHeight={'600px'} flexDirection={'row'}
-                       justifyContent={'center'} alignItems={'center'} margin={'0 auto'}>
-                    {
-                        sortedFields.map(field => {
-                            return (
-                                vis[field]
-                                    ?
-                                    <CoinInfo key={field} isBlured={blr[field]}
-                                              name={field.toUpperCase().replace('_', ' ')}
-                                              value={coin[field]}
-                                              limits={{
-                                                  min: coinLimit[1][field],
-                                                  max: coinLimit[0][field]
-                                              }}
-                                              reverse={coinDirection[field]}
-                                              desc={ctt[field]}
-                                    />
-                                    :
-                                    null
-
-                            )
-                        })
-                    }
-                </Stack>
-            </Stack>
-            <Button onClick={() => navigate('/result/' + Date.now())} variant={'contained'} sx={{margin: 1}}>
-                Сформувати портфель
-            </Button>
-        </Stack>
-        */
-}

@@ -76,7 +76,7 @@ const ResultSearch = () => {
 
                     </div>
                 </section>
-                <div style={{height:'400px'}}>
+                <div style={{height:'420px'}}>
                     <Chart data={chartData}/>
 
                 </div>
@@ -95,56 +95,3 @@ const ResultSearch = () => {
 };
 
 export default ResultSearch;
-
-{/*
-
-    <Stack width={'100vw'} height={'100vh'} alignItems={'center'} padding={10}>
-            <Typography variant="h4" color="#56585a" fontWeight={700} textAlign="center">
-                ЗАЯВКА № {generateNumber} (РЕЗУЛЬТАТ ГЕНЕРАЦІЇ ПОРТФЕЛЯ)
-            </Typography>
-            <Stack gap={0.5}  flexDirection={'row'}>
-                <Stack>
-                    <ResultSearchElement fontWeight={700} text={'Назва'}/>
-
-                    {
-                        data?.map(elem=> {
-                            return <ResultSearchElement text={elem.coin.name} key={elem.coin.name}/>
-                        })
-                    }
-
-
-                </Stack>
-                <Divider orientation={'vertical'} color={'#D3D3D3'}/>
-                <Stack>
-                    <ResultSearchElement fontWeight={700} text={'Рекомендований %'}/>
-                    <ResultSearchElement color={'green'} fontWeight={700} text={'15,1'}/>
-                    <ResultSearchElement color={'green'} fontWeight={700} text={'5,3'}/>
-                    <ResultSearchElement color={'green'} fontWeight={700} text={'2,3'}/>
-
-                </Stack>
-                <Divider orientation={'vertical'} color={'#D3D3D3'}/>
-
-                    <Stack>
-                        <ResultSearchElement fontWeight={700} text={'Вартість у $\n'}/>
-                        <ResultSearchElement text={'151'}/>
-                        <ResultSearchElement text={'523'}/>
-                        <ResultSearchElement text={'123'}/>
-
-                    </Stack>
-                <Divider orientation={'vertical'} color={'#D3D3D3'}/>
-                <Stack>
-                    <ResultSearchElement fontWeight={700} text={'Вартість у крипті'}/>
-
-                    <ResultSearchElement text={'23'}/>
-                    <ResultSearchElement text={'93'}/>
-                    <ResultSearchElement text={'54'}/>
-
-                </Stack>
-
-            </Stack>
-
-
-        </Stack>
-    
-*/
-}
