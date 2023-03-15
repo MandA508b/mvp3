@@ -17,7 +17,7 @@ body{
   width:100vw;
   min-height: 100vh;
   background: url("static/img/BGmain.png") 0 0/100% 100% no-repeat;
-  padding: 66px 0;
+  padding: 90px 0;
 }
 body{
 
@@ -1093,11 +1093,17 @@ main.page {
   color: inherit;
   white-space: nowrap;
 }
-@media (any-hover: hover) {
+.coin_type-active{
+  color: #7059e1;
+
+}
+
+/* commented */
+/* @media (any-hover: hover) {
   .nav-project__list-item:hover {
     color: #7059e1;
   }
-}
+} */
 
 /*==================================*/
 /*Table section====================*/
