@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Card, Tooltip, Typography} from "@mui/material";
-import InfoIcon from '@mui/icons-material/Info';
+import {Tooltip} from "@mui/material";
 
 const CoinInfo = ({name, value, isBlured = false, limits, reverse, desc}) => {
     const [color, setColor] = useState('#000000')
@@ -17,10 +16,22 @@ const CoinInfo = ({name, value, isBlured = false, limits, reverse, desc}) => {
             }
         }
 
+        if(typeof value === 'number' || name === 'MARKET CAP' || name === 'TOTAL SUPPLY'){
+            if(name === 'MARKET CAP' || name === 'TOTAL SUPPLY') {
+                setModifiedValue(Number(value))
+            }
+            if(modifiedValue>=1000000000000){
+                setModifiedValue(`${(modifiedValue/1000000000000).toFixed(2)} T`)
+            }else if(modifiedValue>=1000000000){
+                setModifiedValue(`${(modifiedValue/1000000000).toFixed(2)} B`)
 
-        if(typeof value === 'number'){
+            }else if(modifiedValue>=1000000){
+                setModifiedValue(`${(modifiedValue/1000000).toFixed(2)} M`)
 
-            if(value<1000000)setModifiedValue(value.toFixed(2))
+            }else{
+                setModifiedValue(value.toFixed(2))
+            }
+
         }
 
     }, [])
