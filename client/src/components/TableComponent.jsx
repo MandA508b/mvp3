@@ -39,7 +39,6 @@ const TableComponent = () => {
             for(let coinName of changedCoinsNames){
                 const coin = data.find(elem=>elem.name===coinName)
                 const res = await saveCoin(coin).unwrap()
-                console.log(res)
             }
             alert("Данні збережено успішно!")
         }catch (e) {

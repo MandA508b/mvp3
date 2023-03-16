@@ -14,7 +14,6 @@ const Login = ({ type="login"}) => {
     const [handleLogin] = useLoginMutation()
     const navigate = useNavigate()
     const handleSubmit = async (e) => {
-        console.log(login, pass)
         e.preventDefault()
         if(!confirm) alert('Підтвердіть, що вам виповнилося 18 років, і ви погоджуєтесь з Умовами використання та Політикою конфіденційності.')
         if(login.length && pass.length && confirm) {
@@ -51,7 +50,6 @@ const Login = ({ type="login"}) => {
                     <div className="age_proof_group">
                         <input onChange={e=>{
                             setConfirm(e.target.checked)
-                            console.log(confirm)
                             }} type="checkbox" id="age_proof" name="age_proof"/>
                             <label htmlFor="age_proof" className="age_proof">Я підтверджую, що мені виповнилося 18
                                 років, і я погоджуюся з Умовами використання та Політикою конфіденційності.</label>

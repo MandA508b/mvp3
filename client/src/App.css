@@ -16,7 +16,7 @@ body{
   position: relative;
   width:100vw;
   min-height: 100vh;
-  background: url("static/img/BGmain.png") 0 0/100% 100% no-repeat;
+  background: url("./assets/BGmain.png") 0 0/100% 100% no-repeat;
   padding: 90px 0;
 }
 body{
@@ -695,7 +695,7 @@ body {
   flex-direction: column;
   width: 100%;
   min-height: 100vh;
-  background: url("./assets/img/BGmain.png") 0 0/100% 100% no-repeat;
+  background: url("assets/BGmain.png") 0 0/100% 100% no-repeat;
   margin: 0 auto;
 }
 

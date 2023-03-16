@@ -28,7 +28,6 @@ const Download = () => {
         }
     ]
     const {data:coins} = useFetchAllCoinsQuery()
-    useEffect(()=>console.log(coins),[coins])
     const saveAsExcel = (buffer, filename) => {
         const data = new Blob([buffer], {type: EXCEL_TYPE})
         fs.saveAs(data, filename + new Date().getTime() + '.xlsx')

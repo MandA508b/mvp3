@@ -50,7 +50,6 @@ const Settings = ({show}) => {
         res[name] = !status
         try {
             const req = await changeVisible({projectVisibleFilterData: res})
-            console.log(req,res)
         } catch (e) {
             console.log(e)
         }
@@ -61,7 +60,6 @@ const Settings = ({show}) => {
         res[name] = !status
         try {
             const req = await changeBlur({projectBlureFilterData: res})
-            console.log(req,res)
         } catch (e) {
             console.log(e)
         }

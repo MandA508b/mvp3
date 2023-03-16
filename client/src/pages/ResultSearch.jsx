@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useLocation} from "react-router";
 import {useGetResultCoinQuery} from "../redux/table/tableApiSlice";
 import Chart from "../components/Chart";
+import MobileChart from "../components/MobileChart";
 
 
 const adjustPercent = list => {
@@ -11,13 +12,13 @@ const adjustPercent = list => {
     })
     const rest = 100-sum
     const add = Number((rest / list.length).toFixed(2))
-    console.log(sum, rest, add)
     return list.map(elem=>{
         return {...elem, percent:elem.percent+add}
     })
 }
 
 const ResultSearch = () => {
+    const windowSize = window.innerWidth
     const location = useLocation()
     const {data, isLoading, isSuccess} = useGetResultCoinQuery()
     const [sortedData, setSortedData] = useState([])
@@ -77,15 +78,17 @@ const ResultSearch = () => {
                     </div>
                 </section>
                 <div style={{height:'420px'}}>
-                    <Chart data={chartData}/>
+                    {
+                        windowSize >996 ?
+                            <Chart data={chartData}/>
+                            :
+                            <MobileChart data={chartData}/>
+                    }
+
 
                 </div>
 
-                <section className="diagramma-generate">
-                    <div className="diagramma-wrapper">
-                        {/*<img src={require("./../assets/img/diagramma_crypto_generate.png")}/>*/}
-                    </div>
-                </section>
+
             </section>
         </main>
 

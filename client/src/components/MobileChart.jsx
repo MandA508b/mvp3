@@ -17,8 +17,8 @@ const renderActiveShape = (props) => {
 
     return (
         <g>
-            <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill} className={'chart_title'}>
-                Hamker
+            <text style={{fontSize:22}} x={cx} y={cy} dy={8} textAnchor="middle" fill={'rgba(112, 89, 225,1)'} className={'chart_title'}>
+                {`${payload.name} ${(percent * 100).toFixed(2)}%`}
             </text>
             <Sector
                 cx={cx}
@@ -38,17 +38,11 @@ const renderActiveShape = (props) => {
                 outerRadius={outerRadius + 10}
                 fill={fill}
             />
-            <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
-            <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
-            <text className={'chart_text'} x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333">{payload.name}</text>
-            <text  className={'chart_text'} x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#999">
-                {`(Rate ${(percent * 100).toFixed(2)}%)`}
-            </text>
         </g>
     );
 };
 
-function Chart ({data}){
+function MobileChart ({data}){
     const [activeIndex, setActiveIndex] = useState(0)
 
     const onPieEnter = (_, index) => setActiveIndex(index)
@@ -62,8 +56,8 @@ function Chart ({data}){
                     data={data}
                     cx="50%"
                     cy="50%"
-                    innerRadius={120}
-                    outerRadius={160}
+                    innerRadius={100}
+                    outerRadius={140}
                     fill="#8884d8"
                     dataKey="value"
                     onMouseEnter={onPieEnter}
@@ -74,39 +68,4 @@ function Chart ({data}){
 }
 
 
-export default Chart;
-//
-// export  class ResultPieChart extends PureComponent {
-//     static demoUrl = 'https://codesandbox.io/s/pie-chart-with-customized-active-shape-y93si';
-//
-//     state = {
-//         activeIndex: 0,
-//     };
-//
-//     onPieEnter = (_, index) => {
-//         this.setState({
-//             activeIndex: index,
-//         });
-//     };
-//
-//     render() {
-//         return (
-//             <ResponsiveContainer width="100%" height="100%">
-//                 <PieChart width={400} height={400}>
-//                     <Pie
-//                         activeIndex={this.state.activeIndex}
-//                         activeShape={renderActiveShape}
-//                         data={data}
-//                         cx="50%"
-//                         cy="50%"
-//                         innerRadius={60}
-//                         outerRadius={80}
-//                         fill="#8884d8"
-//                         dataKey="value"
-//                         onMouseEnter={this.onPieEnter}
-//                     />
-//                 </PieChart>
-//             </ResponsiveContainer>
-//         );
-//     }
-// }
+export default MobileChart;

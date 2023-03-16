@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useLocation} from "react-router";
 import {useNavigate} from "react-router-dom";
-import {Button, Stack, Typography} from "@mui/material";
+import { Typography} from "@mui/material";
 import {
     useCoinDirectionQuery,
     useCoinLimitQuery, useCoinTooltipQuery,
@@ -29,7 +29,7 @@ const types = [
         dbName:'MV'
     },
 ]
-
+const notShow = ['id', 'img', 'full_name', 'name']
 const Coin = () => {
     const navigate = useNavigate()
     const location = useLocation()
@@ -62,7 +62,6 @@ const Coin = () => {
     useEffect(() => {
         if (isSuccess) {
             setCoin(data.filter(coin => coin.name === name.toUpperCase())[0])
-            console.log(data)
         }
     }, [data])
 
@@ -100,10 +99,9 @@ const Coin = () => {
                     <ul className="nav-project__list">
                         {
                             types.map(elem=>{
-                                console.log(coin.type)
                                 const active = elem.dbName === coin.type
                                 return(
-                                    <li className={`nav-project__list-item ${active ? 'coin_type-active' : null}`}><a href="#">{elem.name}</a></li>
+                                    <li key={elem.dbName} className={`nav-project__list-item ${active ? 'coin_type-active' : null}`}><a href="#">{elem.name}</a></li>
                                 )
                             })
                         }
@@ -116,6 +114,7 @@ const Coin = () => {
                     <div className="table__grid grid no-payed">
                         {
                             sortedFields.map(field => {
+                                if(notShow.includes(field)) return null
                                 let fieldName = ''
                                 if(field.split('_').length>2){
                                     field.split('_').forEach(elem=>fieldName+=elem[0]?.toUpperCase())

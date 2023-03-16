@@ -8,7 +8,6 @@ const AuthRequire = () => {
     const token = localStorage.getItem('token')
     const location = useLocation()
     const dispatch = useDispatch()
-    console.log(token)
     useEffect(()=>{
         if (!!token) {
             const userData = jwt_decode(token)

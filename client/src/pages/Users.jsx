@@ -17,7 +17,6 @@ const Users = () => {
     const [registration] = useRegistrationMutation()
 
     const handleSubmit = async (e) => {
-        console.log(login, pass)
         e.preventDefault()
         if (login.length && pass.length) {
             try {

@@ -42,7 +42,6 @@ function Projects() {
         const fetchData = async () => {
             await triggerCoins()
             await triggerGroups()
-            console.log(resultCoins)
         }
 
         if (!!token) {
@@ -56,7 +55,6 @@ function Projects() {
     useEffect(() => {
         if (resultCoins.isSuccess) {
             dispatch(setData({data: deleteProperties(resultCoins.data),place:'pro57'}))
-            console.log(resultCoins)
         }
     }, [resultCoins])
 
