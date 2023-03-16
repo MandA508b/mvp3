@@ -1227,7 +1227,6 @@ main.page {
   white-space: nowrap;
   flex-wrap: nowrap;
   font-family: "FuturaPT-Medium";
-  font-size: 18px;
   line-height: 100%;
   font-weight: 400;
   color: #000001;
@@ -1310,7 +1309,6 @@ main.page {
 }
 .grid__item-value {
   font-family: "FuturaPT-Bold";
-  font-size: 18px;
   line-height: 100%;
   font-weight: 900;
   color: #000001;
