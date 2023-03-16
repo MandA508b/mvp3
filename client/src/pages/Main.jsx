@@ -1,10 +1,7 @@
 import React, {useState} from 'react';
-import {Stack, TextField, Typography, InputAdornment} from "@mui/material";
 import useDebounce from "../hooks/useDebounce";
 import {useSearchCoinMutation} from "../redux/table/tableApiSlice";
-import DropDownCoin from "../components/DropDownCoin";
 import {Link, useNavigate} from "react-router-dom";
-import SearchIcon from '@mui/icons-material/Search';
 
 const hashtags = ['BTC',
     'ETH', 'XRP', 'TRX', 'BNB', 'USDC', 'DAI', 'XEC', 'KLAY', 'CAKE', 'TWT', 'MKR', 'ZEC', 'FTM', 'USDP', 'TUSD', 'XTZ', 'WBTC']
@@ -86,54 +83,3 @@ const Main = () => {
 };
 
 export default Main;
-
-{/*        <Stack height={"100vh"} width={'100vw'} display={'flex'} alignItems={'center'} sx={{paddingTop: '10vw'}}>
-    <Typography fontSize={36} fontWeight={700} color={'#56585a'}>
-        Головна
-    </Typography>
-
-    <TextField variant={'standard'} placeholder={'Введіть свою улюблену криптовалюту'} value={search} onChange={onChange}
-               InputProps={{disableUnderline: true,startAdornment: (
-                       <InputAdornment position="start">
-                           <SearchIcon />
-                       </InputAdornment>
-                   )}}
-               sx={{background: '#fff', width: 400, margin: 2, borderRadius: 46, padding: '8px 16px', boxShadow:'0px 3px 5px 0px rgb(0 0 0 / 20%)'}}
-    />
-
-
-    {resultSearch.length ?
-        <Stack borderRadius={2} bgcolor={'#fff'} maxHeight={300}
-               sx={{
-                   overflowY: 'scroll',
-                   boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px'
-               }}
-        >
-            {
-                resultSearch?.map(coin => <DropDownCoin key={coin._id} coin={coin}/>)
-            }
-
-        </Stack> :
-        <Stack marginTop={2} gap={1} display={'flex'} flexDirection={'row'} width={350} flexWrap={'wrap'}>
-            {
-                hashtags.map(ht => (
-                    <Typography fontWeight={300} color={'#B6BBBE'} key={ht}
-                                onClick={() => navigate(`/project/${ht}`)}
-                                sx={{
-                                    "&:hover": {background: '#F5F5F5'},
-                                    padding: '2px 8px',
-                                    cursor: 'pointer',
-                                    borderRadius: 1
-                                }}>
-                        {`#${ht}`}
-                    </Typography>
-                ))
-            }
-        </Stack>
-
-
-    }
-
-</Stack>
-*/
-}

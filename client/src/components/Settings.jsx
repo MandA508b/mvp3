@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {
     useChangeBlureFilterMutation,
     useChangeDirectionMutation, useChangeFilterMutation, useChangeVisibleFilterMutation,
@@ -49,7 +49,7 @@ const Settings = ({show}) => {
         const res = {}
         res[name] = !status
         try {
-            const req = await changeVisible({projectVisibleFilterData: res})
+            await changeVisible({projectVisibleFilterData: res})
         } catch (e) {
             console.log(e)
         }
@@ -59,7 +59,7 @@ const Settings = ({show}) => {
         const res = {}
         res[name] = !status
         try {
-            const req = await changeBlur({projectBlureFilterData: res})
+            await changeBlur({projectBlureFilterData: res})
         } catch (e) {
             console.log(e)
         }

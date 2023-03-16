@@ -64,28 +64,3 @@ const NewCoin = ({handleCloseDialog}) => {
 }
 
 export default NewCoin;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const NewCoin = () => {
-//     const [name, setName] = useState('')
-//     const dispatch = useDispatch()
-//
-//     return (
-//         <Stack  display='flex' flexDirection='row' gap={1} padding={2} bgcolor='#fff' borderRadius={2}>
-//             <TextField value={name} onChange={(e)=>setName(e.target.value)} label='Назва' error={!name.length}/>
-//             <Button onClick={handleAdd}>Додати</Button>
-//         </Stack>
-//     );
-// };

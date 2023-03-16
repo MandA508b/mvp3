@@ -1,15 +1,8 @@
 import React from 'react';
-import {Button, MenuItem, Select, Stack, Typography} from "@mui/material";
-import {Link, useNavigate} from "react-router-dom";
 import {Outlet} from "react-router";
-import {logoutUser, selectCurrentToken} from "../redux/user/userSlice";
-import {useDispatch, useSelector} from "react-redux";
-import {useLogoutMutation} from "../redux/user/userApiSlice";
 import Header from "./Header";
 
-function refreshPage() {
-    window.location.reload(false);
-}
+
 
 const Layout = () => {
 

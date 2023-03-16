@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import * as XLSX from "xlsx";
 import * as fs from 'file-saver'
 import {Button} from "@mui/material";
@@ -6,27 +6,6 @@ import {useFetchAllCoinsQuery} from "../redux/table/tableApiSlice";
 
 const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const Download = () => {
-    const data = [
-        {
-            "name": 'alex',
-            "age": 12,
-            "lol": "ta"
-        },
-        {
-            "name": 'alex',
-            "age": 12,
-            "lol": "ta"
-        },
-        {
-            "name": 'alex',
-            "age": 12,
-            "lol": "ta"
-        }, {
-            "name": 'alex',
-            "age": 12,
-            "lol": "ta"
-        }
-    ]
     const {data:coins} = useFetchAllCoinsQuery()
     const saveAsExcel = (buffer, filename) => {
         const data = new Blob([buffer], {type: EXCEL_TYPE})

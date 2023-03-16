@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {Button, Popover, Stack, TextField} from "@mui/material";
 import CheckIcon from '@mui/icons-material/Check';
-import {useChangeBlureFilterMutation, useChangeCoinTooltipMutation} from "../redux/table/tableApiSlice";
+import { useChangeCoinTooltipMutation} from "../redux/table/tableApiSlice";
 
 
 const ChangeTooltip = ({name,tt}) => {

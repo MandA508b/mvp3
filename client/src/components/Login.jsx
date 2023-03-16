@@ -68,17 +68,3 @@ const Login = ({ type="login"}) => {
 };
 
 export default Login;
-{/*
-import {Button, Stack, TextField, Typography} from "@mui/material";
-
-<Stack padding={2} gap={1} display="flex" width={'fit-content'} flexDirection='row' alignItems='center' bgcolor="#fff"
-               borderRadius={2}>
-            <Typography>{type==='login' ? 'Вхід' : "Добавлення адміна"}</Typography>
-            <TextField size='small' value={login} label="Login" onChange={e => setLogin(e.target.value)}/>
-            <TextField size='small' value={pass} label='Password' onChange={e => setPass(e.target.value)}/>
-            <Button color='success' variant='contained' onClick={handleSubmit}>
-                {type==='login' ? 'Вхід' : '+'}
-            </Button>
-        </Stack>
-
-*/}
