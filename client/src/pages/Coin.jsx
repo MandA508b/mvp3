@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {useLocation} from "react-router";
 import {useNavigate} from "react-router-dom";
 import { Typography} from "@mui/material";
+import LinearProgress from '@mui/material/LinearProgress';
+
 import {
     useCoinDirectionQuery,
     useCoinLimitQuery, useCoinTooltipQuery,
@@ -35,6 +37,7 @@ const Coin = () => {
     const location = useLocation()
     const name = location.pathname.split('/').slice(-1)[0]
     const [coin, setCoin] = useState({})
+    const [notFound, setNotFound] = useState(false)
     const {data, isLoading, isSuccess} = useFetchAllCoinsQuery()
     const {data: coinLimit, isLoading: cll, isSuccess: cls} = useCoinLimitQuery()
     const {data: coinDirection, isLoading: cdl, isSuccess: cds} = useCoinDirectionQuery()
@@ -62,20 +65,27 @@ const Coin = () => {
     useEffect(() => {
         if (isSuccess) {
             setCoin(data.filter(coin => coin.name === name.toUpperCase())[0])
+            //setNotFound(!!data.filter(coin => coin.name === name.toUpperCase())[0])
+            setNotFound(!data.filter(coin => coin.name === name.toUpperCase()).length)
+            console.log(!!data.filter(coin => coin.name === name.toUpperCase()).length)
         }
     }, [data])
 
-    if (!isSuccess || isLoading || !cls || cll || !cds || cdl || !vss || vsl || !bls || bll || !cts || ctl || !sortedFields.length)
+    if (!isSuccess || isLoading || !cls || cll || !cds || cdl || !vss || vsl || !bls || bll || !cts || ctl || !sortedFields.length || !coin.name)
         return (
-            <Typography textAlign={'center'} fontSize={36}
-                        fontWeight={700} color={'#56585a'}>
-                Loading
-            </Typography>)
+            <div style={{width:'80vw', margin:'0 auto'}}>
+                <Typography textAlign={'center'} fontSize={36}
+                            fontWeight={700} color={'#56585a'}>
+                    Loading
+                </Typography>
+                <LinearProgress />
+            </div>
+            )
 
-    if (!coin?.name)
+    if (notFound)
         return (
             <Typography textAlign={'center'} fontSize={36} fontWeight={700} color={'#56585a'}>
-                Not Found
+                Not Found :/
             </Typography>
         )
 
