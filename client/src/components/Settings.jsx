@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     useChangeBlureFilterMutation,
     useChangeDirectionMutation, useChangeFilterMutation, useChangeVisibleFilterMutation,
-    useCoinDirectionQuery, useCoinTooltipQuery,
+    useCoinDirectionQuery, useCoinLimitQuery, useCoinTooltipQuery,
     useFilterCalculatingQuery, useProjectBlureFilterQuery, useProjectVisibleFilterQuery
 } from "../redux/table/tableApiSlice";
 import TableCell from "@mui/material/TableCell";
@@ -11,11 +11,16 @@ import {useSelector} from "react-redux";
 import {selectCurrentGroup} from "../redux/groups/groupsSlice";
 import Checkbox from "@mui/material/Checkbox";
 import ChangeTooltip from "./ChangeTooltip";
+import ChangeLimit from "./ChangeLimit";
 const Settings = ({show}) => {
+
+    const [limits, setLimits] = useState({})
+
     const {data, isSuccess, isLoading} = useCoinDirectionQuery()
     const {data: vis, isSuccess: vss, isLoading: vsl} = useProjectVisibleFilterQuery()
     const {data: blr, isSuccess: bls, isLoading: bll} = useProjectBlureFilterQuery()
     const {data: ctt, isSuccess: cts, isLoading: ctl} = useCoinTooltipQuery()
+    const {data: lim, isLoading: lml, isSuccess: lms} = useCoinLimitQuery()
 
     const {data: filterCalc, isSuccess: fcs, isLoading: fcl} = useFilterCalculatingQuery()
 
@@ -65,13 +70,23 @@ const Settings = ({show}) => {
         }
     }
 
+    useEffect(()=>{
+        if(lms) {
+            const newLim = {}
+            Object.keys(lim[0]).forEach((name)=>{
+                newLim[name] = {min:lim[1][name], max:lim[0][name]}
+            })
+            setLimits(newLim)
+        }
+    },[lms])
 
-    if (!isSuccess || isLoading || fcl || !fcs || !vss || vsl || !bls || bll || !cts || ctl || !show) return null
+
+    if (!isSuccess || isLoading || fcl || !fcs || !vss || vsl || !bls || bll || !cts || ctl || !show || !lms || lml || !Object.keys(limits).length) return null
     return (
         <>
             <TableRow sx={{bgcolor:'#ecf0f4'}}>
                 <TableCell></TableCell>
-                <TableCell sx={{columnSpan: 2}} align={'left'}>Reverse?</TableCell>
+                <TableCell sx={{columnSpan: 2}} align={'left'}>Reverse</TableCell>
                 {
                     Object.keys(group).map(elem => {
                         if (group[elem] && elem !== "name" && elem !== 'full_name') {
@@ -151,6 +166,23 @@ const Settings = ({show}) => {
                             return (
                                 <TableCell key={elem} align="center">
                                     <ChangeTooltip name={elem} tt={ctt[elem]}/>
+                                </TableCell>
+                            )
+                        } else return null
+                    })
+                }
+                <TableCell></TableCell>
+
+            </TableRow>
+            <TableRow sx={{bgcolor:'#ecf0f4'}}>
+                <TableCell></TableCell>
+                <TableCell sx={{columnSpan: 2}} align={'left'}>Limits</TableCell>
+                {
+                    Object.keys(group).map(elem => {
+                        if (group[elem] && elem !== "_id" && elem !== 'full_name' && elem!=='name') {
+                            return (
+                                <TableCell key={elem} align="center">
+                                    <ChangeLimit name={elem} limits={{...limits[elem]}}/>
                                 </TableCell>
                             )
                         } else return null

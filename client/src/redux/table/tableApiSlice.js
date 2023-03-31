@@ -48,6 +48,16 @@ export const tableApiSlice = apiSlice.injectEndpoints({
             },
             invalidatesTags: ['CoinDirection']
         }),
+        changeLimit: build.mutation({
+            query: body => {
+                return {
+                    url: '/coinLimit/update',
+                    method: 'PUT',
+                    body
+                }
+            },
+            invalidatesTags: ['CoinLimit']
+        }),
         getResultCoin: build.query({
             query: () => '/calculating/getTop',
         }),
@@ -113,6 +123,7 @@ export const tableApiSlice = apiSlice.injectEndpoints({
 })
 
 export const {
+    useChangeLimitMutation,
     useCoinTooltipQuery,
     useChangeCoinTooltipMutation,
     useProjectBlureFilterQuery,
