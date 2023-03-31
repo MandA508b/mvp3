@@ -7,7 +7,7 @@ class coinLimitService {
     }
 
     async update(data) {
-        if(data.name === 'upper limit' || data.name === 'lower limit'){
+        if((data.limitName === 'upper limit' || data.limitName === 'lower limit') && data.name === undefined){
             const newDate = await CoinLimit.findOneAndUpdate({name: data.name}, {data})
             return newDate
         }
