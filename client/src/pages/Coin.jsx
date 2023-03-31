@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {useLocation} from "react-router";
 import {useNavigate} from "react-router-dom";
 import { Typography} from "@mui/material";
+import LinearProgress from '@mui/material/LinearProgress';
+
 import {
     useCoinDirectionQuery,
     useCoinLimitQuery, useCoinTooltipQuery,
@@ -9,32 +11,148 @@ import {
     useProjectVisibleFilterQuery
 } from "../redux/table/tableApiSlice";
 import CoinInfo from "../components/CoinInfo";
-
-
 const types = [
-    {
-        name:'Smart Contract Platform',
-        dbName:'SC'
-    },
-    {
-        name:'Defi',
-        dbName:'DeFi'
-    },
-    {
-        name:'Ecosystem',
-        dbName:'(token) ES'
-    },
-    {
-        name:'Metaverse',
-        dbName:'MV'
-    },
+    "(token) ES",
+    "MktP",
+    "DEXt",
+    "orakul",
+    "CEXt",
+    "DeFi",
+    "product",
+    "NFT",
+    "Protocol",
+    "Platform",
+    "MV",
+    "Defi",
+    "Binance Launchpad",
+    "GameFi",
+    "Store Of Value",
+    "Marketplace",
+    "Platform ",
+    "Metaverse",
+    "Bridge",
+    "Substrate",
+    "Oracle",
+    "Payments",
+    "DAO"
 ]
+const order = [
+    'name',
+    'classification',
+    'class',
+    'type',
+    'subtype',
+    'proof_consensus',
+    'expected_rise_to_decline',
+    'expected_1_5_years',
+    'possible_passage',
+    'floor1',
+    'near_good_price',
+    'percent_of_good_price',
+    'ceiling1',
+    'ceiling2',
+    'percent_90_ath',
+    'percent_93_ath',
+    'percent_95_ath',
+    'price',
+    'percentage_of_the_market',
+    'ath_percent',
+    'ath_price',
+    'ath_time',
+    'ath_time',
+    'x_history',
+    'atl_percent',
+    'atl_price',
+    'atl_time',
+    'max_supply',
+    'max_cap',
+    'percent__out_of_supply',
+    'total_supply',
+    'market_cap',
+    'x_on_token_sales',
+    'price_pre_seed',
+    'amount_pre_seed',
+    'price_seed',
+    'amount_seed',
+    'price_private_round',
+    'amount_private_round',
+    'price_early_supporters',
+    'amount_early_supporters',
+    'price_ico_public',
+    'amount_ico_public',
+    'price_ieo',
+    'amount_ieo',
+    'price_ido',
+    'amount_ido',
+    'aver_price',
+    'average_price',
+    'total_involved',
+    'percent_emission',
+    'percent_emission_by_algorithm',
+    'difference_between_emission',
+    'emission_max_rate',
+    'emission',
+    'emission_price_after_with_inflation',
+    'emission_inflation',
+    'emission_inflation_token_day',
+    'emission_inflation_token_week',
+    'emission_inflation_token_month',
+    'true',
+    'wallets',
+    'site_with_wallets',
+    'wallet1',
+    'wallet2',
+    'wallet3',
+    'wallet4',
+    'wallet5',
+    'holders',
+    'transfers',
+    'number_of_funds_invested',
+    'have_own_fund',
+    'ratio_of_funds',
+    'number_of_exchangers',
+    'is_on_coinbase_and_kraken',
+    'watchlist_on_coinmarketcap',
+    'largest_price_of_the_mining',
+    'reddit_members',
+    'twitter_followers',
+    'unnamed',
+    'gitHub_commits',
+    'gitHub_stars',
+    'gitHub_followers',
+    'gitHub_contributors',
+    'numberOfDevelopers',
+    'marketing_site',
+    'marketing_google',
+    'marketing_youtube'
+
+
+]
+// const types = [
+//     {
+//         name:'Smart Contract Platform',
+//         dbName:'SC'
+//     },
+//     {
+//         name:'Defi',
+//         dbName:'DeFi'
+//     },
+//     {
+//         name:'Ecosystem',
+//         dbName:'(token) ES'
+//     },
+//     {
+//         name:'Metaverse',
+//         dbName:'MV'
+//     },
+// ]
 const notShow = ['id', 'img', 'full_name', 'name']
 const Coin = () => {
     const navigate = useNavigate()
     const location = useLocation()
     const name = location.pathname.split('/').slice(-1)[0]
     const [coin, setCoin] = useState({})
+    const [notFound, setNotFound] = useState(false)
     const {data, isLoading, isSuccess} = useFetchAllCoinsQuery()
     const {data: coinLimit, isLoading: cll, isSuccess: cls} = useCoinLimitQuery()
     const {data: coinDirection, isLoading: cdl, isSuccess: cds} = useCoinDirectionQuery()
@@ -46,9 +164,11 @@ const Coin = () => {
 
     useEffect(() => {
         if (bls) {
+
             const blured = []
             const unblured = []
-            Object.keys(blr).forEach(elem => {
+            order.forEach(elem => {
+
                 if (elem !== '_id' && elem !== '__v') {
                     if (!blr[elem]) unblured.push(elem)
                     else blured.push(elem)
@@ -61,21 +181,33 @@ const Coin = () => {
 
     useEffect(() => {
         if (isSuccess) {
+            let types= []
             setCoin(data.filter(coin => coin.name === name.toUpperCase())[0])
+            data.forEach(coin=>{
+                if(!types.includes(coin.type)) types.push(coin.type)
+            })
+            console.log(types)
+            //setNotFound(!!data.filter(coin => coin.name === name.toUpperCase())[0])
+            setNotFound(!data.filter(coin => coin.name === name.toUpperCase()).length)
+            console.log(!!data.filter(coin => coin.name === name.toUpperCase()).length)
         }
     }, [data])
 
-    if (!isSuccess || isLoading || !cls || cll || !cds || cdl || !vss || vsl || !bls || bll || !cts || ctl || !sortedFields.length)
+    if (!isSuccess || isLoading || !cls || cll || !cds || cdl || !vss || vsl || !bls || bll || !cts || ctl || !sortedFields.length || !coin.name)
         return (
-            <Typography textAlign={'center'} fontSize={36}
-                        fontWeight={700} color={'#56585a'}>
-                Loading
-            </Typography>)
+            <div style={{width:'80vw', margin:'0 auto'}}>
+                <Typography textAlign={'center'} fontSize={36}
+                            fontWeight={700} color={'#56585a'}>
+                    Loading
+                </Typography>
+                <LinearProgress />
+            </div>
+            )
 
-    if (!coin?.name)
+    if (notFound)
         return (
             <Typography textAlign={'center'} fontSize={36} fontWeight={700} color={'#56585a'}>
-                Not Found
+                Not Found :/
             </Typography>
         )
 
@@ -96,15 +228,16 @@ const Coin = () => {
                     </div>
                 </div>
                 <nav className="project__nav nav-project">
-                    <ul className="nav-project__list">
-                        {
-                            types.map(elem=>{
-                                const active = elem.dbName === coin.type
-                                return(
-                                    <li key={elem.dbName} className={`nav-project__list-item ${active ? 'coin_type-active' : null}`}><a href="#">{elem.name}</a></li>
-                                )
-                            })
-                        }
+                    <ul className="nav-project__list" style={{display:'flex', flexWrap:'wrap', justifyContent:'center'}}>
+                        {/*{*/}
+                        {/*    types.map(elem=>{*/}
+                        {/*        const active = elem === coin.type*/}
+                        {/*        return(*/}
+                        {/*            <li key={elem} className={`nav-project__list-item ${active ? 'coin_type-active' : null}`}><a href="#">{elem}</a></li>*/}
+                        {/*        )*/}
+                        {/*    })*/}
+                        {/*}*/}
+                        <li className={'nav-project__list-item coin_type-active'}><a href="#">{coin.type}</a></li>
                     </ul>
                 </nav>
             </section>
