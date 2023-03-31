@@ -6,9 +6,9 @@ class coinLimitService {
         return await CoinLimit.find()
     }
 
-    async update(data) {
-        if((data.limitName === 'upper limit' || data.limitName === 'lower limit') && data.name === undefined){
-            const newDate = await CoinLimit.findOneAndUpdate({name: data.name}, {data})
+    async update(limitName, data) {
+        if((limitName === 'upper limit' || limitName === 'lower limit') && data.name === undefined){
+            const newDate = await CoinLimit.findOneAndUpdate({name: limitName}, {data})
             return newDate
         }
         throw ApiError.badRequest()

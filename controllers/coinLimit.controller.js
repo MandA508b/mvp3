@@ -15,11 +15,11 @@ class coinLimitController {
 
     async update(req, res, next){
         try {
-            const {data} = req.body
-            if(data === undefined){
+            const {limitName, data} = req.body
+            if(limitName === undefined){
                 return next(ApiError.badRequest())
             }
-            const newData = await coinLimitService.update()
+            const newData = await coinLimitService.update(limitName, data)
 
             return res.json(newData)
         }catch (e){
