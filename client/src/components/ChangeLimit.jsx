@@ -9,7 +9,6 @@ const ChangeLimit = ({name,limits}) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const [min, setMin] = useState(limits.min);
     const [max, setMax] = useState(limits.max);
-    console.log(name ,limits)
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -23,14 +22,13 @@ const ChangeLimit = ({name,limits}) => {
 
     const [changeLimit] = useChangeLimitMutation()
     const handleChangeLimit = async () => {
-        const res = {}
-        res[name] = name
+
         try {
-            const resMax = await changeLimit({data:{limitName:'upper limit',[name]:max}})
-            const resMin = await changeLimit({data:{limitName:'lower limit', [name]:min}})
-            console.log(resMax, resMin)
+
+            const resMax = await changeLimit({limitName: 'lower limit', data:{[name]:Number(min)}})
+            const resMin = await changeLimit({limitName:'upper limit',data:{[name]:Number(max)}})
             handleClose()
-            alert(`Ви успішно змінили опис(tooltip) поля ${name} на ${name} =)`)
+            alert(`Ви успішно змінили limit поля ${name} на min=${min} max=${max} =)`)
         } catch (e) {
             alert('Щось пішло не так :/')
             console.log(e)
@@ -41,7 +39,7 @@ const ChangeLimit = ({name,limits}) => {
     return (
         <div>
             <Button aria-describedby={id} size={'small'} variant="contained" onClick={handleClick}>
-                change
+                {typeof limits.min ===  'number'  ? `${limits.min} - ${limits.max}` : 'change'}
             </Button>
             <Popover
                 id={id}
