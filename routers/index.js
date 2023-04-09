@@ -10,6 +10,7 @@ const coinLimitRouter = require('./coinLimit.router')
 const coinTooltipRouter = require('./coinTooltip.router')
 const projectBlureFilterRouter = require('./projectBlureFilter.router')
 const projectVisibleFilterRouter = require('./projectVisibleFilter.router')
+const excelValueRouter = require('./excelValue.router')
 
 router.use('/user', userRouter)
 router.use('/coin', coinRouter)
@@ -21,5 +22,6 @@ router.use('/coinLimit', coinLimitRouter)
 router.use('/coinTooltip', coinTooltipRouter)
 router.use('/projectBlureFilter', projectBlureFilterRouter)
 router.use('/projectVisibleFilter', projectVisibleFilterRouter)
+router.use('/excelValueRouter', excelValueRouter)
 
 module.exports = router

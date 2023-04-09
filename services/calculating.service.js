@@ -1,8 +1,8 @@
 const CryptoRating = require('../models/cryptoRating.model')
-const FilterCalculating = require('../models/filterCalculating.model')
 const CoinDirection = require('../models/coinDirection.model')
 const Coin = require('../models/coin.model')
 const CoinLimit = require('../models/coinLimit.model')
+const excelValue = require('../models/excelValue.model')
 
 class calculatingService {
 
@@ -14,54 +14,54 @@ class calculatingService {
             cryptoRating[cryptoRatingKey].rating = 0
             await cryptoRating[cryptoRatingKey].save()
         }
-        const CoinLimitUpper = await CoinLimit.findOne({name: "upper limit"})
-        const CoinLimitLower = await CoinLimit.findOne({name: "lower limit"})
-        const coinDirection = await CoinDirection.findOne({})
-        const arr = Object.keys(CoinDirection.schema.tree)
+
 
         const coins = await Coin.find({})
+           const value3 = await excelValue.findOne({name: "row_3"})
+           const value6 = await excelValue.findOne({name: "row_6"})
 
         for (let coinsKey in coins) {
             try{
-                let value_AH3 = 5,
-                value_BM3 = 1,
-                value_BN3 = 1,
-                value_BO3 = 1,
-                value_BO4 = 1,
-                value_BQ4 = 1
+                let value_AH3 = value3.x_on_token_sales,
+                value_BM3 = value3.wallet1,
+                value_BN3 = value3.wallet2,
+                value_BO3 = value3.wallet3,
+                value_BP3 = value3.wallet4,
+                value_BQ3 = value3.wallet5
 
-            if(1/Number(coins[coinsKey].wallet1)*1>1)value_BM3=1/Number(coins[coinsKey].wallet1)*1
-            if(1/Number(coins[coinsKey].wallet2)*1>1)value_BN3=1/Number(coins[coinsKey].wallet2)*1
-            if(1/Number(coins[coinsKey].wallet3)*1>1)value_BO3=1/Number(coins[coinsKey].wallet3)*1
-            if(1/Number(coins[coinsKey].wallet4)*1>1)value_BO4=1/Number(coins[coinsKey].wallet4)*1
-            if(1/Number(coins[coinsKey].wallet5)*1>1)value_BQ4=1/Number(coins[coinsKey].wallet5)*1
+            if(1/Number(coins[coinsKey].x_on_token_sales)*value3.x_on_token_sales>value3.x_on_token_sales)value_AH3=1/Number(coins[coinsKey].x_on_token_sales)*value3.x_on_token_sales
+            if(1/Number(coins[coinsKey].wallet1)*value3.wallet1>value3.wallet1)value_BM3=1/Number(coins[coinsKey].wallet1)*value3.wallet1
+            if(1/Number(coins[coinsKey].wallet2)*value3.wallet2>value3.wallet2)value_BN3=1/Number(coins[coinsKey].wallet2)*value3.wallet2
+            if(1/Number(coins[coinsKey].wallet3)*value3.wallet3>value3.wallet3)value_BO3=1/Number(coins[coinsKey].wallet3)*value3.wallet3
+            if(1/Number(coins[coinsKey].wallet4)*value3.wallet4>value3.wallet4)value_BP3=1/Number(coins[coinsKey].wallet4)*value3.wallet4
+            if(1/Number(coins[coinsKey].wallet5)*value3.wallet5>value3.wallet5)value_BQ3=1/Number(coins[coinsKey].wallet5)*value3.wallet5
             coins[coinsKey].rating = 0 
             
             if(!coins[coinsKey].ath_percent)coins[coinsKey].ath_percent = 0
-            try{coins[coinsKey].rating += Number(coins[coinsKey].ath_percent)/100*10}catch(e){}
+            try{coins[coinsKey].rating += Number(coins[coinsKey].ath_percent)/value6.ath_percent*value3.ath_percent}catch(e){}
 
             
             if(!coins[coinsKey].max_cap)coins[coinsKey].max_cap = 0
-            try{coins[coinsKey].rating += Number(coins[coinsKey].max_cap)/100000000000*1}catch(e){}
+            try{coins[coinsKey].rating += Number(coins[coinsKey].max_cap)/value6.max_cap*value3.max_cap}catch(e){}
 
             
             try{coins[coinsKey].rating += value_AH3}catch(e){}
 
             
             if(!coins[coinsKey].total_involved)coins[coinsKey].total_involved = 0
-            try{coins[coinsKey].rating += Number(coins[coinsKey].total_involved)/100*3}catch(e){}
+            try{coins[coinsKey].rating += Number(coins[coinsKey].total_involved)/value6.total_involved*value3.total_involved}catch(e){}
 
             
             if(!coins[coinsKey].percent_emission)coins[coinsKey].percent_emission = 0
-            try{coins[coinsKey].rating += Number(coins[coinsKey].percent_emission)/100*1}catch(e){}
+            try{coins[coinsKey].rating += Number(coins[coinsKey].percent_emission)/value6.percent_emission*value3.percent_emission}catch(e){}
 
             
             if(!coins[coinsKey].emission)coins[coinsKey].emission = 0
-            try{coins[coinsKey].rating += Number(coins[coinsKey].emission)/12*1}catch(e){}
+            try{coins[coinsKey].rating += Number(coins[coinsKey].emission)/value6.emission*value3.emission}catch(e){}
 
             
             if(!coins[coinsKey].wallets)coins[coinsKey].wallets = 0
-            try{coins[coinsKey].rating += 1/Number(coins[coinsKey].wallets)*1}catch(e){}
+            try{coins[coinsKey].rating += 1/Number(coins[coinsKey].wallets)*value3.wallets}catch(e){}
 
             
             try{coins[coinsKey].rating += value_BM3}catch(e){}
@@ -73,78 +73,79 @@ class calculatingService {
             try{coins[coinsKey].rating += value_BO3}catch(e){}
 
             
-            try{coins[coinsKey].rating += value_BO4}catch(e){}
+            try{coins[coinsKey].rating += value_BP3}catch(e){}
 
             
-            try{coins[coinsKey].rating += value_BQ4}catch(e){}
+            try{coins[coinsKey].rating += value_BQ3}catch(e){}
 
             
             if(!coins[coinsKey].holders)coins[coinsKey].holders = 0
-            try{coins[coinsKey].rating += Number(coins[coinsKey].holders)/1000000*2}catch(e){}
+            try{coins[coinsKey].rating += Number(coins[coinsKey].holders)/value6.holders*value3.holders}catch(e){}
 
             
             if(!coins[coinsKey].transfers)coins[coinsKey].transfers = 0
-            try{coins[coinsKey].rating += Number(coins[coinsKey].transfers)/10000000*1}catch(e){}
+            try{coins[coinsKey].rating += Number(coins[coinsKey].transfers)/value6.transfers*value3.transfers}catch(e){}
 
             
             if(!coins[coinsKey].number_of_funds_invested)coins[coinsKey].number_of_funds_invested = 0
-            try{coins[coinsKey].rating += Number(coins[coinsKey].number_of_funds_invested)/10*3}catch(e){}
+            try{coins[coinsKey].rating += Number(coins[coinsKey].number_of_funds_invested)/value6.number_of_funds_invested*value3.number_of_funds_invested}catch(e){}
 
             
             if(!coins[coinsKey].ratio_of_funds)coins[coinsKey].ratio_of_funds = 0
-            try{coins[coinsKey].rating += Number(coins[coinsKey].ratio_of_funds)/50*48}catch(e){}
+            try{coins[coinsKey].rating += Number(coins[coinsKey].ratio_of_funds)/value6.ratio_of_funds*value3.ratio_of_funds}catch(e){}
 
             
             if(!coins[coinsKey].number_of_exchangers)coins[coinsKey].number_of_exchangers = 0
-            try{coins[coinsKey].rating += Number(coins[coinsKey].number_of_exchangers)/100*2}catch(e){}
+            try{coins[coinsKey].rating += Number(coins[coinsKey].number_of_exchangers)/value6.number_of_exchangers*value3.number_of_exchangers}catch(e){}
 
             
             if(!coins[coinsKey].watchlist_on_coinmarketcap)coins[coinsKey].watchlist_on_coinmarketcap = 0
-            try{coins[coinsKey].rating += Number(coins[coinsKey].watchlist_on_coinmarketcap)/1000000*1}catch(e){}
+            try{coins[coinsKey].rating += Number(coins[coinsKey].watchlist_on_coinmarketcap)/value6.watchlist_on_coinmarketcap*value3.watchlist_on_coinmarketcap}catch(e){}
 
             
             if(!coins[coinsKey].reddit_members)coins[coinsKey].reddit_members = 0
-            try{coins[coinsKey].rating += Number(coins[coinsKey].reddit_members)/1000000*2}catch(e){}
+            try{coins[coinsKey].rating += Number(coins[coinsKey].reddit_members)/value6.reddit_members*value3.reddit_members}catch(e){}
 
             
             if(!coins[coinsKey].twitter_followers)coins[coinsKey].twitter_followers = 0
-            try{coins[coinsKey].rating += Number(coins[coinsKey].twitter_followers) /1000000*2}catch(e){}
+            try{coins[coinsKey].rating += Number(coins[coinsKey].twitter_followers) /value6.twitter_followers*value3.twitter_followers}catch(e){}
 
             
             if(!coins[coinsKey].gitHub_commits)coins[coinsKey].gitHub_commits = 0
-            try{coins[coinsKey].rating += Number(coins[coinsKey].gitHub_commits) /10000*1}catch(e){}
+            try{coins[coinsKey].rating += Number(coins[coinsKey].gitHub_commits) /value6.gitHub_commits*value3.gitHub_commits}catch(e){}
 
             
             if(!coins[coinsKey].gitHub_stars)coins[coinsKey].gitHub_stars = 0
-            try{coins[coinsKey].rating += Number(coins[coinsKey].gitHub_stars)/5000*4}catch(e){}
+            try{coins[coinsKey].rating += Number(coins[coinsKey].gitHub_stars)/value6.gitHub_stars*value3.gitHub_stars}catch(e){}
 
             
             if(!coins[coinsKey].gitHub_followers)coins[coinsKey].gitHub_followers = 0
-            try{coins[coinsKey].rating += Number(coins[coinsKey].gitHub_followers)/700*1}catch(e){}
+            try{coins[coinsKey].rating += Number(coins[coinsKey].gitHub_followers)/value6.gitHub_followers*value3.gitHub_followers}catch(e){}
 
             
             if(!coins[coinsKey].gitHub_contributors)coins[coinsKey].gitHub_contributors = 0
-            try{ coins[coinsKey].rating += Number(coins[coinsKey].gitHub_contributors)/500*2}catch(e){}
+            try{ coins[coinsKey].rating += Number(coins[coinsKey].gitHub_contributors)/value6.gitHub_contributors*value3.gitHub_contributors}catch(e){}
 
             
             if(!coins[coinsKey].marketing_site)coins[coinsKey].marketing_site = 0
-            try{coins[coinsKey].rating += Number(coins[coinsKey].marketing_site)/10000*2}catch(e){}
+            try{coins[coinsKey].rating += Number(coins[coinsKey].marketing_site)/value6.marketing_site*value3.marketing_site}catch(e){}
 
             
             if(!coins[coinsKey].marketing_google)coins[coinsKey].marketing_google = 0
-            try{coins[coinsKey].rating += Number(coins[coinsKey].marketing_google)/200000000*1}catch(e){}
+            try{coins[coinsKey].rating += Number(coins[coinsKey].marketing_google)/value6.marketing_google*value3.marketing_google}catch(e){}
 
             
             if(!coins[coinsKey].marketing_youtube)coins[coinsKey].marketing_youtube = 0
-            try{coins[coinsKey].rating += Number(coins[coinsKey]. marketing_youtube)/15000000*1}catch(e){}
+            try{coins[coinsKey].rating += Number(coins[coinsKey]. marketing_youtube)/value6.marketing_youtube*value3.marketing_youtube}catch(e){}
 
             
             if(!coins[coinsKey].unnamed)coins[coinsKey].unnamed = 0
-            try{coins[coinsKey].rating += Math.min(Number(coins[coinsKey].unnamed)/100*1,1)}catch(e){}
+            try{coins[coinsKey].rating += Math.min(Number(coins[coinsKey].unnamed)/value6.unnamed*value3.unnamed,value3.unnamed)}catch(e){}
 
             
             await coins[coinsKey].save()
             }catch(e){
+                return console.log(e)
                 console.log("bad calculatig at",   coins[coinsKey].name)
             }
         }
