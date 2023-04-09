@@ -28,11 +28,11 @@ class excelValueController {
 
     async update(req, res, next){
         try{
-            const {name, param}= req.body
+            const {name, data}= req.body
             if(name === undefined){
                 return throw(ApiError.badRequest())
             }
-            const excelValue = await excelValueService.update(name, param)
+            const excelValue = await excelValueService.update(name, data)
 
             return res.json(excelValue)
         }catch(e){

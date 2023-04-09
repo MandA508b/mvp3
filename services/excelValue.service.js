@@ -28,7 +28,7 @@ class excelValueService {
         }
     }
 
-    async update(name, param){
+    async update(name, data){
         try{
             const excelValue = await ExcelValue.findOneAndUpdate({name}, {...param})
             if(!excelValue)
