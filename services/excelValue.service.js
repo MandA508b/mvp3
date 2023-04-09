@@ -30,7 +30,7 @@ class excelValueService {
 
     async update(name, data){
         try{
-            const excelValue = await ExcelValue.findOneAndUpdate({name}, {...param})
+            const excelValue = await ExcelValue.findOneAndUpdate({name}, {...data})
             if(!excelValue)
             return throw ApiError.badRequest()
 
