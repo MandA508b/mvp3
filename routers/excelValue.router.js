@@ -1,6 +1,6 @@
 const Router = require('express')
 const router = new Router()
-const excelValueLimitController = require('../controllers/excelValue.conteoller')
+const excelValueLimitController = require('../controllers/excelValue.controller')
 const authMiddleware = require('../middlewares/authMidlleware');
 
 router.post('/create',authMiddleware, excelValueLimitController.create)
