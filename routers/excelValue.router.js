@@ -5,6 +5,6 @@ const authMiddleware = require('../middlewares/authMidlleware');
 
 router.post('/create',authMiddleware, excelValueLimitController.create)
 router.put('/update',authMiddleware, excelValueLimitController.update)
-router.get('/findAll', excelValueLimitController.findAll)
+router.get('/findAll', authMiddleware, excelValueLimitController.findAll)
 
 module.exports = router
