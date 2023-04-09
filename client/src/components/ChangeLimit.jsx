@@ -25,8 +25,8 @@ const ChangeLimit = ({name,limits}) => {
 
         try {
 
-            const resMax = await changeLimit({limitName: 'lower limit', data:{[name]:Number(min)}})
-            const resMin = await changeLimit({limitName:'upper limit',data:{[name]:Number(max)}})
+            await changeLimit({limitName: 'lower limit', data:{[name]:Number(min)}})
+            await changeLimit({limitName:'upper limit',data:{[name]:Number(max)}})
             handleClose()
             alert(`Ви успішно змінили limit поля ${name} на min=${min} max=${max} =)`)
         } catch (e) {
