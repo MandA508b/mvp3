@@ -2,7 +2,7 @@ import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 import {logoutUser} from "./user/userSlice";
 
 const baseQuery = fetchBaseQuery({
-    baseUrl:"https://server.cryptoon.online",
+    baseUrl:"http://localhost:5000",
     credentials: 'include',
     prepareHeaders: (headers) =>{
         const token = localStorage.getItem('token')
@@ -25,6 +25,6 @@ const baseQueryWithReauth = async (args, api,extraOption)=>{
 export const apiSlice = createApi({
     reducerPath:"appApi",
     baseQuery: baseQueryWithReauth,
-    tagTypes:["User",'CoinDirection','filterCalculating','projectBlureFilter','projectVisibleFilter'],
+    tagTypes:["User",'CoinDirection','filterCalculating','projectBlureFilter','projectVisibleFilter','excelValue'],
     endpoints:build=>({})
 })

@@ -30,7 +30,7 @@ class excelValueController {
         try{
             const {name, data}= req.body
             if(name === undefined){
-                return throw(ApiError.badRequest())
+                return next(ApiError.badRequest())
             }
             const excelValue = await excelValueService.update(name, data)
 

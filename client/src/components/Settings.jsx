@@ -3,24 +3,29 @@ import {
     useChangeBlureFilterMutation,
     useChangeDirectionMutation, useChangeFilterMutation, useChangeVisibleFilterMutation,
     useCoinDirectionQuery, useCoinLimitQuery, useCoinTooltipQuery,
-    useFilterCalculatingQuery, useProjectBlureFilterQuery, useProjectVisibleFilterQuery
+    useFilterCalculatingQuery, useProjectBlureFilterQuery, useProjectVisibleFilterQuery,
+    useExcelValueQuery,
+    useChangeExcelValueMutation,
 } from "../redux/table/tableApiSlice";
-import TableCell from "@mui/material/TableCell";
-import TableRow from "@mui/material/TableRow";
+import {TableCell, TableRow, Checkbox} from "@mui/material/";
+
 import {useSelector} from "react-redux";
 import {selectCurrentGroup} from "../redux/groups/groupsSlice";
-import Checkbox from "@mui/material/Checkbox";
 import ChangeTooltip from "./ChangeTooltip";
 import ChangeLimit from "./ChangeLimit";
+import ChangeExcelValue from "./ChangeExcelValue";
+
 const Settings = ({show}) => {
 
     const [limits, setLimits] = useState({})
+    const [excelValue, setExcelValue] = useState({})
 
     const {data, isSuccess, isLoading} = useCoinDirectionQuery()
     const {data: vis, isSuccess: vss, isLoading: vsl} = useProjectVisibleFilterQuery()
     const {data: blr, isSuccess: bls, isLoading: bll} = useProjectBlureFilterQuery()
     const {data: ctt, isSuccess: cts, isLoading: ctl} = useCoinTooltipQuery()
     const {data: lim, isLoading: lml, isSuccess: lms} = useCoinLimitQuery()
+    const {data: exv, isLoading: evl, isSuccess: evs} = useCoinLimitQuery()
 
     const {data: filterCalc, isSuccess: fcs, isLoading: fcl} = useFilterCalculatingQuery()
 
@@ -38,9 +43,10 @@ const Settings = ({show}) => {
         } catch (e) {
             console.log(e)
         }
-
-
     }
+    useEffect(() => {
+        console.log(exv)
+    }, [evs])
     const handleChangeFilter = async (name, status) => {
         const res = {}
         res[name] = !status
@@ -70,130 +76,155 @@ const Settings = ({show}) => {
         }
     }
 
-    useEffect(()=>{
-        if(lms) {
+    useEffect(() => {
+        if (lms) {
             const newLim = {}
-            Object.keys(lim[0]).forEach((name)=>{
-                newLim[name] = {min:lim[1][name], max:lim[0][name]}
+            Object.keys(lim[0]).forEach((name) => {
+                newLim[name] = {min: lim[1][name], max: lim[0][name]}
             })
             setLimits(newLim)
         }
-    },[lms])
+    }, [lms])
+    useEffect(() => {
+        if (evs) {
+            const newExcelValue = {}
+            Object.keys(lim[0]).forEach((name) => {
+                newExcelValue[name] = {min: lim[1][name], max: lim[0][name]}
+            })
+            setExcelValue(newExcelValue)
+        }
+    }, [evs])
 
 
     if (!isSuccess || isLoading || fcl || !fcs || !vss || vsl || !bls || bll || !cts || ctl || !show || !lms || lml || !Object.keys(limits).length) return null
     return (
         <>
-            <TableRow sx={{bgcolor:'#ecf0f4'}}>
-                <TableCell></TableCell>
-                <TableCell sx={{columnSpan: 2}} align={'left'}>Reverse</TableCell>
-                {
-                    Object.keys(group).map(elem => {
-                        if (group[elem] && elem !== "name" && elem !== 'full_name') {
-                            return (
-                                <TableCell key={elem} align="center">
-                                    <Checkbox checked={data[elem]}
-                                              onChange={e => handleChangeReverse(elem, data[elem])}/>
-                                </TableCell>
-                            )
-                        } else return null
-                    })
-                }
-                <TableCell></TableCell>
+        <TableRow sx={{bgcolor: '#ecf0f4'}}>
+            <TableCell></TableCell>
+            <TableCell sx={{columnSpan: 2}} align={'left'}>Reverse</TableCell>
+            {
+                Object.keys(group).map(elem => {
+                    if (group[elem] && elem !== "name" && elem !== 'full_name') {
+                        return (
+                            <TableCell key={elem} align="center">
+                                <Checkbox checked={data[elem]}
+                                          onChange={e => handleChangeReverse(elem, data[elem])}/>
+                            </TableCell>
+                        )
+                    } else return null
+                })
+            }
+            <TableCell></TableCell>
 
-            </TableRow>
+        </TableRow>
 
-            <TableRow sx={{bgcolor:'#ecf0f4'}}>
-                <TableCell></TableCell>
-                <TableCell sx={{columnSpan: 2}} align={'left'}>Filter</TableCell>
-                {
-                    Object.keys(group).map(elem => {
-                        if (group[elem] && elem !== "name" && elem !== 'full_name') {
-                            return (
-                                <TableCell key={elem} align="center">
-                                    <Checkbox checked={filterCalc[elem]}
-                                              onChange={e => handleChangeFilter(elem, filterCalc[elem])}/>
-                                </TableCell>
-                            )
-                        } else return null
-                    })
-                }
-                <TableCell></TableCell>
+        <TableRow sx={{bgcolor: '#ecf0f4'}}>
+            <TableCell></TableCell>
+            <TableCell sx={{columnSpan: 2}} align={'left'}>Filter</TableCell>
+            {
+                Object.keys(group).map(elem => {
+                    if (group[elem] && elem !== "name" && elem !== 'full_name') {
+                        return (
+                            <TableCell key={elem} align="center">
+                                <Checkbox checked={filterCalc[elem]}
+                                          onChange={e => handleChangeFilter(elem, filterCalc[elem])}/>
+                            </TableCell>
+                        )
+                    } else return null
+                })
+            }
+            <TableCell></TableCell>
 
-            </TableRow>
-            <TableRow sx={{bgcolor:'#ecf0f4'}}>
-                <TableCell></TableCell>
-                <TableCell sx={{columnSpan: 2}} align={'left'}>Visible</TableCell>
-                {
-                    Object.keys(group).map(elem => {
-                        if (group[elem] && elem !== "name" && elem !== 'full_name') {
-                            return (
-                                <TableCell key={elem} align="center">
-                                    <Checkbox checked={vis[elem]}
-                                              onChange={e => handleChangeVisible(elem, vis[elem])}/>
-                                </TableCell>
-                            )
-                        } else return null
-                    })
-                }
-                <TableCell></TableCell>
+        </TableRow>
+        <TableRow sx={{bgcolor: '#ecf0f4'}}>
+            <TableCell></TableCell>
+            <TableCell sx={{columnSpan: 2}} align={'left'}>Visible</TableCell>
+            {
+                Object.keys(group).map(elem => {
+                    if (group[elem] && elem !== "name" && elem !== 'full_name') {
+                        return (
+                            <TableCell key={elem} align="center">
+                                <Checkbox checked={vis[elem]}
+                                          onChange={e => handleChangeVisible(elem, vis[elem])}/>
+                            </TableCell>
+                        )
+                    } else return null
+                })
+            }
+            <TableCell></TableCell>
 
-            </TableRow>
-            <TableRow sx={{bgcolor:'#ecf0f4'}}>
-                <TableCell></TableCell>
-                <TableCell sx={{columnSpan: 2}} align={'left'}>Blur</TableCell>
-                {
-                    Object.keys(group).map(elem => {
-                        if (group[elem] && elem !== "name" && elem !== 'full_name') {
-                            return (
-                                <TableCell key={elem} align="center">
-                                    <Checkbox checked={blr[elem]}
-                                              onChange={e => handleChangeBlur(elem, blr[elem])}/>
-                                </TableCell>
-                            )
-                        } else return null
-                    })
-                }
-                <TableCell></TableCell>
+        </TableRow>
+        <TableRow sx={{bgcolor: '#ecf0f4'}}>
+            <TableCell></TableCell>
+            <TableCell sx={{columnSpan: 2}} align={'left'}>Blur</TableCell>
+            {
+                Object.keys(group).map(elem => {
+                    if (group[elem] && elem !== "name" && elem !== 'full_name') {
+                        return (
+                            <TableCell key={elem} align="center">
+                                <Checkbox checked={blr[elem]}
+                                          onChange={e => handleChangeBlur(elem, blr[elem])}/>
+                            </TableCell>
+                        )
+                    } else return null
+                })
+            }
+            <TableCell></TableCell>
 
-            </TableRow>
-            <TableRow sx={{bgcolor:'#ecf0f4'}}>
-                <TableCell></TableCell>
-                <TableCell sx={{columnSpan: 2}} align={'left'}>Tooltip</TableCell>
-                {
-                    Object.keys(group).map(elem => {
-                        if (group[elem] && elem !== "name" && elem !== 'full_name') {
-                            return (
-                                <TableCell key={elem} align="center">
-                                    <ChangeTooltip name={elem} tt={ctt[elem]}/>
-                                </TableCell>
-                            )
-                        } else return null
-                    })
-                }
-                <TableCell></TableCell>
+        </TableRow>
+        <TableRow sx={{bgcolor: '#ecf0f4'}}>
+            <TableCell></TableCell>
+            <TableCell sx={{columnSpan: 2}} align={'left'}>Tooltip</TableCell>
+            {
+                Object.keys(group).map(elem => {
+                    if (group[elem] && elem !== "name" && elem !== 'full_name') {
+                        return (
+                            <TableCell key={elem} align="center">
+                                <ChangeTooltip name={elem} tt={ctt[elem]}/>
+                            </TableCell>
+                        )
+                    } else return null
+                })
+            }
+            <TableCell></TableCell>
 
-            </TableRow>
-            <TableRow sx={{bgcolor:'#ecf0f4'}}>
-                <TableCell></TableCell>
-                <TableCell sx={{columnSpan: 2}} align={'left'}>Limits</TableCell>
-                {
-                    Object.keys(group).map(elem => {
-                        if (group[elem] && elem !== "_id" && elem !== 'full_name' && elem!=='name') {
-                            return (
-                                <TableCell key={elem} align="center">
-                                    <ChangeLimit name={elem} limits={{...limits[elem]}}/>
-                                </TableCell>
-                            )
-                        } else return null
-                    })
-                }
-                <TableCell></TableCell>
+        </TableRow>
+        <TableRow sx={{bgcolor: '#ecf0f4'}}>
+            <TableCell></TableCell>
+            <TableCell sx={{columnSpan: 2}} align={'left'}>Limits</TableCell>
+            {
+                Object.keys(group).map(elem => {
+                    if (group[elem] && elem !== "_id" && elem !== 'full_name' && elem !== 'name') {
+                        return (
+                            <TableCell key={elem} align="center">
+                                <ChangeLimit name={elem} limits={{...limits[elem]}}/>
+                            </TableCell>
+                        )
+                    } else return null
+                })
+            }
+            <TableCell></TableCell>
+        </TableRow>
+        <TableRow sx={{bgcolor: '#ecf0f4'}}>
+            <TableCell></TableCell>
+            <TableCell sx={{columnSpan: 2}} align={'left'}>ExcelValue</TableCell>
+            {
+                Object.keys(group).map(elem => {
+                    if (group[elem] && elem !== "_id" && elem !== 'full_name' && elem !== 'name') {
+                        return (
+                            <TableCell key={elem} align="center">
+                                <ChangeExcelValue name={elem} data={{...excelValue[elem]}}/>
+                            </TableCell>
+                        )
+                    } else return null
+                })
+            }
+            <TableCell></TableCell>
+        </TableRow>
 
-            </TableRow>
-
-        </>
-    );
+</>
+)
+    ;
 };
 
 export default Settings;

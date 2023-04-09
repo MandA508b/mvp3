@@ -117,12 +117,28 @@ export const tableApiSlice = apiSlice.injectEndpoints({
             },
             invalidatesTags: ['coinTooltip']
         }),
+        excelValue: build.query({
+            query: () => '/excelValueRouter/findAll',
+            providesTags: ['excelValue']
+        }),
+        changeExcelValue: build.mutation({
+            query: body => {
+                return {
+                    url: '/excelValueRouter/update',
+                    method: 'PUT',
+                    body
+                }
+            },
+            invalidatesTags: ['excelValue']
+        }),
 
     }),
 
 })
 
 export const {
+    useExcelValueQuery,
+    useChangeExcelValueMutation,
     useChangeLimitMutation,
     useCoinTooltipQuery,
     useChangeCoinTooltipMutation,

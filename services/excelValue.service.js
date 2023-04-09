@@ -31,15 +31,15 @@ class excelValueService {
     async update(name, data){
         try{
             const excelValue = await ExcelValue.findOneAndUpdate({name}, {...data})
+            console.log(name, data)
             if(!excelValue)
-            return throw ApiError.badRequest()
+            throw ApiError.badRequest()
 
             return excelValue
         }catch (e){
             console.log(e)
         }
     }
-
 }
 
 module.exports = new excelValueService()
