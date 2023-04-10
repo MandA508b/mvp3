@@ -7,13 +7,13 @@ import MobileChart from "../components/MobileChart";
 
 const adjustPercent = list => {
     let sum = 0
-    list.forEach(elem=>{
-        sum  += elem.percent
+    list.forEach(elem => {
+        sum += elem.percent
     })
-    const rest = 100-sum
+    const rest = 100 - sum
     const add = Number((rest / list.length).toFixed(2))
-    return list.map(elem=>{
-        return {...elem, percent:elem.percent+add}
+    return list.map(elem => {
+        return {...elem, percent: elem.percent + add}
     })
 }
 
@@ -24,31 +24,31 @@ const ResultSearch = () => {
     const [sortedData, setSortedData] = useState([])
     const [chartData, setChartData] = useState([])
     useEffect(() => {
-        if(isSuccess ){
+        if (isSuccess) {
             const list = []
-            data.forEach(elem=>{
-                if(elem.coin !== 'nothing' && typeof elem.coin === 'string')
+            data.forEach(elem => {
+                if (elem.coin !== 'nothing' && typeof elem.coin === 'string')
                     list.push(elem)
-                    
-           })
-           let sorted = list.sort((a,b)=>(a.percent<b.percent)?1:-1)
-           const biggest = sorted[0].percent
-           sorted = adjustPercent(sorted)
-           setSortedData(sorted)
+            })
+            let sorted = list.sort((a, b) => (a.percent < b.percent) ? 1 : -1)
+            const biggest = sorted[0].percent
+            sorted = adjustPercent(sorted)
+            setSortedData(sorted)
 
-           setChartData(sorted.map(elem=>{
-                if(elem.coin !== 'nothing' && typeof elem.coin === 'string') 
-                return {
-                    name:elem.coin,
-                    value:elem.percent,
-                    fill:`rgba(112, 89, 225, ${(elem.percent/biggest).toFixed(1)})`
-                }
+            setChartData(sorted.map(elem => {
+                if (elem.coin !== 'nothing' && typeof elem.coin === 'string')
+                    return {
+                        name: elem.coin,
+                        value: elem.percent,
+                        fill: `rgba(112, 89, 225, ${(elem.percent / biggest).toFixed(1)})`
+                    }
             }))
+            console.log(data, list, chartData)
         }
-        
+
     }, [isSuccess])
     const generateNumber = location.pathname.split('/').slice(-1)[0].slice(7, 12)
-    if (!isSuccess || isLoading ) return null
+    if (!isSuccess || isLoading) return null
     return (
 
 
@@ -77,9 +77,9 @@ const ResultSearch = () => {
 
                     </div>
                 </section>
-                <div style={{height:'420px'}}>
+                <div style={{height: '420px'}}>
                     {
-                        windowSize >996 ?
+                        windowSize > 996 ?
                             <Chart data={chartData}/>
                             :
                             <MobileChart data={chartData}/>
