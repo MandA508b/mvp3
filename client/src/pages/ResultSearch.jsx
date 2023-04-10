@@ -36,14 +36,25 @@ const ResultSearch = () => {
             setSortedData(sorted)
 
             setChartData(sorted.map(elem => {
+                console.log(elem)
                 if (elem.coin !== 'nothing' && typeof elem.coin === 'string')
+                    console.log({elem, name:elem.coin, value:elem.percent})
                     return {
                         name: elem.coin,
                         value: elem.percent,
                         fill: `rgba(112, 89, 225, ${(elem.percent / biggest).toFixed(1)})`
                     }
             }))
-            console.log({data, list, chartData})
+            console.log({
+                data, list, chartData: sorted.map(elem => {
+                    if (elem.coin !== 'nothing' && typeof elem.coin === 'string')
+                        return {
+                            name: elem.coin,
+                            value: elem.percent,
+                            fill: `rgba(112, 89, 225, ${(elem.percent / biggest).toFixed(1)})`
+                        }
+                })
+            })
         }
 
     }, [isSuccess])
