@@ -43,7 +43,7 @@ const ResultSearch = () => {
                         fill: `rgba(112, 89, 225, ${(elem.percent / biggest).toFixed(1)})`
                     }
             }))
-            console.log(data, list, chartData)
+            console.log({data, list, chartData})
         }
 
     }, [isSuccess])
@@ -65,7 +65,6 @@ const ResultSearch = () => {
                             <div className="grid__item">Назва</div>
                             <div className="grid__item">Рейтинг</div>
                         </div>
-
                         {
                             sortedData?.map(elem => (
                                 <div key={elem.coin.name} className="table__grid-result">
@@ -74,7 +73,6 @@ const ResultSearch = () => {
                                 </div>
                             ))
                         }
-
                     </div>
                 </section>
                 <div style={{height: '420px'}}>
