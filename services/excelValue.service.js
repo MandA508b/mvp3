@@ -1,5 +1,6 @@
 const ExcelValue = require('../models/excelValue.model')
 const ApiError = require(`../errors/api.error`)
+const calculationService = require("./calculating.service");
 
 class excelValueService {
 
@@ -34,7 +35,7 @@ class excelValueService {
             console.log(name, data)
             if(!excelValue)
             throw ApiError.badRequest()
-
+            calculationService.calculate()
             return excelValue
         }catch (e){
             console.log(e)
