@@ -199,7 +199,7 @@ const Settings = ({show}) => {
                 {
                     Object.keys(group).map(elem => {
                         if (group[elem] && elem !== "_id" && elem !== 'full_name' && elem !== 'name') {
-                            console.log(exv[0],1)
+
                             return (
                                 <TableCell key={elem} align="center">
                                     <ChangeExcelValue name={'row_3'} data={{name:elem,value:exv[0][elem]}}/>
@@ -216,7 +216,6 @@ const Settings = ({show}) => {
                 {
                     Object.keys(group).map(elem => {
                         if (group[elem] && elem !== "_id" && elem !== 'full_name' && elem !== 'name') {
-                            console.log({[elem]:exv[0][elem]})
                             return (
                                 <TableCell key={elem} align="center">
                                     <ChangeExcelValue name={'row_6'} data={{name:elem, value:exv[1][elem]}}/>

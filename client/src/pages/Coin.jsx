@@ -186,10 +186,8 @@ const Coin = () => {
             data.forEach(coin=>{
                 if(!types.includes(coin.type)) types.push(coin.type)
             })
-            console.log(types)
             //setNotFound(!!data.filter(coin => coin.name === name.toUpperCase())[0])
             setNotFound(!data.filter(coin => coin.name === name.toUpperCase()).length)
-            console.log(!!data.filter(coin => coin.name === name.toUpperCase()).length)
         }
     }, [data])
 
