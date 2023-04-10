@@ -25,7 +25,7 @@ const ChangeExcelValue = ({name,data}) => {
         try {
             await changeExcelValue({name, data:{[data.name]:Number(value)}})
             handleClose()
-            alert(`${name} Нове значення ${data.name} = ${data.value} =)`)
+            alert(`${name} Нове значення ${data.name} = ${value} =)`)
         } catch (e) {
             alert('Щось пішло не так :/')
             console.log(e)
