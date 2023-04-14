@@ -145,12 +145,14 @@ class calculatingService {
 
             
             await coins[coinsKey].save()
+
             }catch(e){
                 return console.log(e)
                 console.log("bad calculatig at",   coins[coinsKey].name)
             }
-        }
 
+        }
+       // cryptoRatingService.init()
         console.log('end calc')
        }catch(e){
         console.log('error :', e)
@@ -160,7 +162,6 @@ class calculatingService {
 
     async getTop(){
         try {
-            await cryptoRatingService.init()
             let top1=(await this.getCoinTop("ES", 0, 1)),
             top2=(await this.getCoinTop("ES", 1, 1)),
             top3=(await this.getCoinTop("ES", 2, 1)),
@@ -201,8 +202,9 @@ class calculatingService {
 
     async getCoinTop(classification, number, len){
         try{
-            const Coins = await CryptoRating.find({classification: classification}).sort({rating: -1})
-            console.log(1, '\n',classification, number, len)
+            const Coins = await Coin.find({classification: classification}).sort({rating: -1})
+            // console.log(Coins[0],Coins[1],Coins[2],Coins[3],Coins[4],Coins[5],Coins[6],Coins[7])
+            // console.log(1, '\n',classification, number, len)
             /*for (let i = 0 ; i < 10 ; i++) {
                try{ console.log(Coins[i])}catch(e){}
             }
