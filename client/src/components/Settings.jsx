@@ -202,7 +202,7 @@ const Settings = ({show}) => {
 
                             return (
                                 <TableCell key={elem} align="center">
-                                    <ChangeExcelValue name={'row_3'} data={{name:elem,value:exv[0][elem]}}/>
+                                    <ChangeExcelValue name={'row_3'} data={{name:elem,value:exv[1][elem]}}/>
                                 </TableCell>
                             )
                         } else return null
@@ -218,7 +218,7 @@ const Settings = ({show}) => {
                         if (group[elem] && elem !== "_id" && elem !== 'full_name' && elem !== 'name') {
                             return (
                                 <TableCell key={elem} align="center">
-                                    <ChangeExcelValue name={'row_6'} data={{name:elem, value:exv[1][elem]}}/>
+                                    <ChangeExcelValue name={'row_6'} data={{name:elem, value:exv[0][elem]}}/>
                                 </TableCell>
                             )
                         } else return null
