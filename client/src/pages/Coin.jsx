@@ -214,7 +214,7 @@ const Coin = () => {
 
             <section className="page__project project container">
                 <div className="project__main">
-                    <h2 className="project__title">{coin.full_name}</h2>
+                    <h2 className="project__title">{!!coin.full_name ? coin.full_name : name}</h2>
                     <div className="project__rate rate">
                         <picture>
                             <source srcSet={require("../assets/img/star.webp")} type="image/webp"/>
