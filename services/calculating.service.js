@@ -1,5 +1,6 @@
 const CryptoRating = require('../models/cryptoRating.model')
 const CoinDirection = require('../models/coinDirection.model')
+const cryptoRatingService = require('../services/cryptoRating.service')
 const Coin = require('../models/coin.model')
 const CoinLimit = require('../models/coinLimit.model')
 const excelValue = require('../models/excelValue.model')
@@ -144,12 +145,14 @@ class calculatingService {
 
             
             await coins[coinsKey].save()
+
             }catch(e){
                 return console.log(e)
                 console.log("bad calculatig at",   coins[coinsKey].name)
             }
-        }
 
+        }
+       // cryptoRatingService.init()
         console.log('end calc')
        }catch(e){
         console.log('error :', e)
@@ -159,53 +162,25 @@ class calculatingService {
 
     async getTop(){
         try {
-            
             let top1=(await this.getCoinTop("ES", 0, 1)),
             top2=(await this.getCoinTop("ES", 1, 1)),
             top3=(await this.getCoinTop("ES", 2, 1)),
             top4=(await this.getCoinTop("ES", 3, 1)),
             top5=(await this.getCoinTop("ES", 4, 1))
 
-            console.log(top1[0])
-            console.log(top2[0])
-            console.log(top3[0])
-            console.log(top4[0])
-            console.log(top5[0])
 
             top1 = top1.concat(await this.getCoinTop(top1[0].name, 0, 6))
             top2 = top2.concat(await this.getCoinTop(top2[0].name, 0, 5))
             top3 = top3.concat(await this.getCoinTop(top3[0].name, 0, 2))
             top4 = top4.concat(await this.getCoinTop(top4[0].name, 0, 2))
 
-            console.log([{coin: top1[0], percent: 21},
-                {coin: top1[0].name, percent: 5},
-                {coin: top1[1].name, percent: 4},
-                {coin: top1[2].name, percent: 3},
-                {coin: top1[3].name, percent: 2},
+            return [{coin: top1[0].name, percent: 21},
+                {coin: top1[1].name, percent: 5},
+                {coin: top1[2].name, percent: 4},
+                {coin: top1[3].name, percent: 3},
                 {coin: top1[4].name, percent: 2},
-                {coin: top1[5].name, percent: 1},
-                {coin: top2[0].name, percent: 13},
-                {coin: top2[1].name, percent: 5},
-                {coin: top2[2].name, percent: 5},
-                {coin: top2[3].name, percent: 2},
-                {coin: top2[4].name, percent: 2},
-                {coin: top2[5].name, percent: 2},
-                {coin: top3[0].name, percent: 11},
-                {coin: top3[1].name, percent: 3},
-                {coin: top3[2].name, percent: 2},
-                {coin: top4[0].name, percent: 8},
-                {coin: top4[1].name, percent: 2},
-                {coin: top4[2].name, percent: 1},
-                {coin: top5[0].name, percent: 6}
-            ])
-
-            return [{coin: top1[0], percent: 21},
-                {coin: top1[0].name, percent: 5},
-                {coin: top1[1].name, percent: 4},
-                {coin: top1[2].name, percent: 3},
-                {coin: top1[3].name, percent: 2},
-                {coin: top1[4].name, percent: 2},
-                {coin: top1[5].name, percent: 1},
+                {coin: top1[5].name, percent: 2},
+                {coin: top1[6].name, percent: 1},
                 {coin: top2[0].name, percent: 13},
                 {coin: top2[1].name, percent: 5},
                 {coin: top2[2].name, percent: 5},
@@ -227,8 +202,9 @@ class calculatingService {
 
     async getCoinTop(classification, number, len){
         try{
-            const Coins = await CryptoRating.find({classification: classification}).sort({rating: 1})
-            console.log(1, '\n',classification, number, len)
+            const Coins = await Coin.find({classification: classification}).sort({rating: -1})
+            // console.log(Coins[0],Coins[1],Coins[2],Coins[3],Coins[4],Coins[5],Coins[6],Coins[7])
+            // console.log(1, '\n',classification, number, len)
             /*for (let i = 0 ; i < 10 ; i++) {
                try{ console.log(Coins[i])}catch(e){}
             }
