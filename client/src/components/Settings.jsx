@@ -195,14 +195,14 @@ const Settings = ({show}) => {
 
             <TableRow sx={{bgcolor: '#ecf0f4'}}>
                 <TableCell></TableCell>
-                <TableCell sx={{columnSpan: 2}} align={'left'}>Row 3</TableCell>
+                <TableCell sx={{columnSpan: 2}} align={'left'}>{exv[1].name.toUpperCase().replace('_', ' ')}</TableCell>
                 {
                     Object.keys(group).map(elem => {
                         if (group[elem] && elem !== "_id" && elem !== 'full_name' && elem !== 'name') {
 
                             return (
                                 <TableCell key={elem} align="center">
-                                    <ChangeExcelValue name={'row_3'} data={{name:elem,value:exv[1][elem]}}/>
+                                    <ChangeExcelValue name={exv[1].name} data={{name:elem,value:exv[1][elem]}}/>
                                 </TableCell>
                             )
                         } else return null
@@ -212,13 +212,13 @@ const Settings = ({show}) => {
             </TableRow>
             <TableRow sx={{bgcolor: '#ecf0f4'}}>
                 <TableCell></TableCell>
-                <TableCell sx={{columnSpan: 2}} align={'left'}>Row 6</TableCell>
+                <TableCell sx={{columnSpan: 2}} align={'left'}>{exv[0].name.toUpperCase().replace('_', ' ')}</TableCell>
                 {
                     Object.keys(group).map(elem => {
                         if (group[elem] && elem !== "_id" && elem !== 'full_name' && elem !== 'name') {
                             return (
                                 <TableCell key={elem} align="center">
-                                    <ChangeExcelValue name={'row_6'} data={{name:elem, value:exv[0][elem]}}/>
+                                    <ChangeExcelValue name={exv[0].name} data={{name:elem, value:exv[0][elem]}}/>
                                 </TableCell>
                             )
                         } else return null
