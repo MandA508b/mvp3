@@ -222,7 +222,7 @@ const Coin = () => {
                                  className="rate__star"/>
                         </picture>
                         <div className="rate__text">Рейтинг проекту:</div>
-                        <div className="rate__nums"><span>{coin.rating<=100 ? coin.rating.toFixed() : 100}</span>/100</div>
+                        <div className="rate__nums"><span>{coin.rating<=100 ? coin.rating?.toFixed() : 100}</span>/100</div>
                     </div>
                 </div>
                 <nav className="project__nav nav-project">

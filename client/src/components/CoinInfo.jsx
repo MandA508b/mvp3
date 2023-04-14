@@ -29,7 +29,11 @@ const CoinInfo = ({name, value, isBlured = false, limits, reverse, desc}) => {
                 setModifiedValue(`${(modifiedValue/1000000).toFixed(2)} M`)
 
             }else{
-                setModifiedValue(value.toFixed(2))
+                try{
+                    setModifiedValue(value.toFixed(2))
+                }catch (e) {
+                    console.log(name)
+                }
             }
 
         }
