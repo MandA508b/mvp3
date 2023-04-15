@@ -2,7 +2,7 @@ import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 import {logoutUser} from "./user/userSlice";
 
 const baseQuery = fetchBaseQuery({
-    baseUrl:"http://localhost:5000",
+    baseUrl:"https://server.cryptoon.online",
     credentials: 'include',
     prepareHeaders: (headers) =>{
         const token = localStorage.getItem('token')
