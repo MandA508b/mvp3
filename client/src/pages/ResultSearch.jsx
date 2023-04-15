@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useLocation} from "react-router";
 import {useGetResultCoinQuery} from "../redux/table/tableApiSlice";
 import Chart from "../components/Chart";
 import MobileChart from "../components/MobileChart";
+import axios from "axios";
 
 
 const adjustPercent = list => {
@@ -20,47 +21,57 @@ const adjustPercent = list => {
 const ResultSearch = () => {
     const windowSize = window.innerWidth
     const location = useLocation()
-    const {data, isLoading, isSuccess} = useGetResultCoinQuery()
+    const timestampRef = useRef(Date.now()).current;
     const [sortedData, setSortedData] = useState([])
     const [chartData, setChartData] = useState([])
+    const [isSuccess, setIsSuccess] = useState(false)
     useEffect(() => {
-        if (isSuccess) {
-            const list = []
-            data.forEach(elem => {
-                if (elem.coin !== 'nothing' && typeof elem.coin === 'string')
-                    list.push(elem)
-            })
-            console.log(list)
-            let sorted = list.sort((a, b) => (a.percent < b.percent) ? 1 : -1)
-            const biggest = sorted[0].percent
-            sorted = adjustPercent(sorted)
-            setSortedData(sorted)
+        const fetchData = async () => {
+            try {
+                const {data} = await axios.get(`https://server.cryptoon.online/calculating/getTop?timestamp=${timestampRef}`)
+                console.log(data)
+                const list = []
+                data.forEach(elem => {
+                    if (elem.coin !== 'nothing' && typeof elem.coin === 'string')
+                        list.push(elem)
+                })
+                console.log(list)
+                let sorted = list.sort((a, b) => (a.percent < b.percent) ? 1 : -1)
+                const biggest = sorted[0].percent
+                sorted = adjustPercent(sorted)
+                setSortedData(sorted)
 
-            setChartData(sorted.map(elem => {
-                console.log(elem)
-                if (elem.coin !== 'nothing' && typeof elem.coin === 'string')
-                    console.log({elem, name:elem.coin, value:elem.percent})
+                setChartData(sorted.map(elem => {
+                    console.log(elem)
+                    if (elem.coin !== 'nothing' && typeof elem.coin === 'string')
+                        console.log({elem, name: elem.coin, value: elem.percent})
                     return {
                         name: elem.coin,
                         value: elem.percent,
                         fill: `rgba(112, 89, 225, ${(elem.percent / biggest).toFixed(1)})`
                     }
-            }))
-            console.log({
-                data, list, chartData: sorted.map(elem => {
-                    if (elem.coin !== 'nothing' && typeof elem.coin === 'string')
-                        return {
-                            name: elem.coin,
-                            value: elem.percent,
-                            fill: `rgba(112, 89, 225, ${(elem.percent / biggest).toFixed(1)})`
-                        }
+                }))
+                setIsSuccess(true)
+                console.log({
+                    data, list, chartData: sorted.map(elem => {
+                        if (elem.coin !== 'nothing' && typeof elem.coin === 'string')
+                            return {
+                                name: elem.coin,
+                                value: elem.percent,
+                                fill: `rgba(112, 89, 225, ${(elem.percent / biggest).toFixed(1)})`
+                            }
+                    })
                 })
-            })
+            } catch (e) {
+                setIsSuccess(false)
+                console.log(e)
+            }
         }
+        fetchData()
 
-    }, [isSuccess])
+    }, [timestampRef])
     const generateNumber = location.pathname.split('/').slice(-1)[0].slice(7, 12)
-    if (!isSuccess || isLoading) return null
+    if (!isSuccess) return null
     return (
 
 

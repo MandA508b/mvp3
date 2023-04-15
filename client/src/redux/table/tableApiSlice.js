@@ -32,7 +32,8 @@ export const tableApiSlice = apiSlice.injectEndpoints({
             }
         }),
         coinLimit: build.query({
-            query: () => '/coinLimit/findAll'
+            query: () => '/coinLimit/findAll',
+            providesTags:['CoinLimit']
         }),
         coinDirection: build.query({
             query: () => '/coinDirection/find',
@@ -46,7 +47,7 @@ export const tableApiSlice = apiSlice.injectEndpoints({
                     body
                 }
             },
-            invalidatesTags: ['CoinDirection']
+            invalidatesTags: ['CoinDirection', 'Result']
         }),
         changeLimit: build.mutation({
             query: body => {
@@ -56,10 +57,11 @@ export const tableApiSlice = apiSlice.injectEndpoints({
                     body
                 }
             },
-            invalidatesTags: ['CoinLimit']
+            invalidatesTags: ['CoinLimit', 'Result']
         }),
         getResultCoin: build.query({
-            query: () => '/calculating/getTop',
+            query: () => `/calculating/getTop`,
+            providesTags:[ 'Result']
         }),
         filterCalculating: build.query({
             query: () => '/filterCalculating/find',
@@ -73,7 +75,7 @@ export const tableApiSlice = apiSlice.injectEndpoints({
                     body
                 }
             },
-            invalidatesTags: ['filterCalculating']
+            invalidatesTags: ['filterCalculating', 'Result']
         }),
         projectVisibleFilter: build.query({
             query: () => '/projectVisibleFilter/find',
@@ -129,7 +131,7 @@ export const tableApiSlice = apiSlice.injectEndpoints({
                     body
                 }
             },
-            invalidatesTags: ['excelValue']
+            invalidatesTags: ['excelValue', 'Result']
         }),
 
     }),
