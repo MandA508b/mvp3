@@ -30,6 +30,7 @@ const ResultSearch = () => {
                 if (elem.coin !== 'nothing' && typeof elem.coin === 'string')
                     list.push(elem)
             })
+            console.log(list)
             let sorted = list.sort((a, b) => (a.percent < b.percent) ? 1 : -1)
             const biggest = sorted[0].percent
             sorted = adjustPercent(sorted)
